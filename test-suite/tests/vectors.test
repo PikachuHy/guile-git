@@ -17,18 +17,18 @@
 ;;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 (define-module (test-suite vectors)
-  :use-module (test-suite lib))
+  :use-module (test-suite lib)
+  #:autoload   (system base compile) (compile))
 
-;; FIXME:  As soon as guile supports immutable vectors, this has to be
-;; replaced with the appropriate error type and message.
-(define exception:immutable-vector
-  (cons 'some-error-type "^trying to modify an immutable vector"))
+(with-test-prefix "vector-set! (compile)"
 
+  (pass-if-exception "vector constant" exception:wrong-type-arg
+    (compile '(vector-set! '#(1 2 3) 0 4) #:to 'value
+             #:env (current-module))))
 
-(with-test-prefix "vector-set!"
+(with-test-prefix "vector-set! (eval)"
 
-  (expect-fail-exception "vector constant"
-    exception:immutable-vector
+  (expect-fail-exception "vector constant" exception:wrong-type-arg
     (vector-set! '#(1 2 3) 0 4)))
 
 (with-test-prefix "vector->list"

@@ -6356,10 +6356,9 @@ A vector created by one of the dynamic vector constructor procedures
 (@pxref{Vector Creation}) can be modified using the following
 procedures.
 
-@emph{NOTE:} According to R5RS, it is an error to use any of these
-procedures on a literally read vector, because such vectors should be
-considered as constants.  Currently, however, Guile does not detect this
-error.
+@emph{NOTE:} Following R5RS, it is an error to use any of these
+procedures on a literally read vector, because such vectors are
+considered as constants.
 
 @rnindex vector-set!
 @deffn {Scheme Procedure} vector-set! vec k obj
